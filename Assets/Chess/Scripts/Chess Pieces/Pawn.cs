@@ -6,10 +6,11 @@ public class Pawn : ChessPiece
 {
     private bool hasMoved = false;
 
-    public override List<Vector2Int> GetPossibleMoves()
+    public override void CalculatePossibleMoves()
     {
         possibleMoves.Clear();
-        Vector2Int currentPosition = _placementHandler.GetPosition();
+        capturedMoves.Clear();
+        Vector2Int currentPosition = placementHandler.GetPosition();
 
         if ((!IsWhite && currentPosition.x != 1) || (IsWhite && currentPosition.x != 6))
         {
@@ -17,10 +18,9 @@ public class Pawn : ChessPiece
         }
 
         int direction = IsWhite ? -1 : 1; // White pawns move down, black pawns move up
-     //   Debug.Log("IsWhite " + IsWhite + " with direction " + direction);
-        // Forward move
+
         Vector2Int forwardMove = new Vector2Int(currentPosition.x + direction, currentPosition.y);
-//        Debug.Log("Forward move " + forwardMove);
+
         if (IsValidBoardPosition(forwardMove) && ChessBoardPlacementHandler.Instance.GetPieceAt(forwardMove) == null)
         {
             possibleMoves.Add(forwardMove);
@@ -40,21 +40,24 @@ public class Pawn : ChessPiece
         // Capture moves
         Vector2Int leftCapture = new Vector2Int(currentPosition.x + direction, currentPosition.y - 1);
         Vector2Int rightCapture = new Vector2Int(currentPosition.x + direction, currentPosition.y + 1);
-        /*Vector2Int leftCapture = new Vector2Int(currentPosition.x - 1, currentPosition.y + direction);
-        Vector2Int rightCapture = new Vector2Int(currentPosition.x + 1, currentPosition.y + direction);*/
 
         if (CanCapture(leftCapture))
+        {
             possibleMoves.Add(leftCapture);
+            capturedMoves.Add(leftCapture);
+        }
 
         if (CanCapture(rightCapture))
+        {
+            capturedMoves.Add(rightCapture);
             possibleMoves.Add(rightCapture);
+        }
 
-        // TODO: Implement en passant rule here
+      
         for (int i = 0; i < possibleMoves.Count; i++)
         {
-            Debug.Log("Possible moves "+possibleMoves[i]);
+//            Debug.Log("Possible moves "+possibleMoves[i]);
         }
-        return possibleMoves;
     }
 
     private bool CanCapture(Vector2Int position)

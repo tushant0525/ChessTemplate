@@ -203,7 +203,7 @@ GameObject:
   - component: {fileID: 60290584}
   - component: {fileID: 60290585}
   - component: {fileID: 60290586}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Queen
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -328,8 +328,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   IsWhite: 0
-  _placementHandler: {fileID: 0}
+  placementHandler: {fileID: 0}
   possibleMoves: []
+  capturedMoves: []
 --- !u!1 &81620425
 GameObject:
   m_ObjectHideFlags: 0
@@ -477,7 +478,7 @@ GameObject:
   - component: {fileID: 110156601}
   - component: {fileID: 110156600}
   - component: {fileID: 110156599}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Bishop
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -511,8 +512,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   IsWhite: 1
-  _placementHandler: {fileID: 0}
+  placementHandler: {fileID: 0}
   possibleMoves: []
+  capturedMoves: []
 --- !u!61 &110156600
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -617,7 +619,7 @@ GameObject:
   - component: {fileID: 175745579}
   - component: {fileID: 175745578}
   - component: {fileID: 175745577}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Knight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -651,8 +653,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   IsWhite: 1
-  _placementHandler: {fileID: 0}
+  placementHandler: {fileID: 0}
   possibleMoves: []
+  capturedMoves: []
 --- !u!61 &175745578
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1081,7 +1084,7 @@ GameObject:
   - component: {fileID: 280411638}
   - component: {fileID: 280411639}
   - component: {fileID: 280411640}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Rook
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1206,8 +1209,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   IsWhite: 0
-  _placementHandler: {fileID: 0}
+  placementHandler: {fileID: 0}
   possibleMoves: []
+  capturedMoves: []
 --- !u!1 &283930264
 GameObject:
   m_ObjectHideFlags: 0
@@ -1355,7 +1359,7 @@ GameObject:
   - component: {fileID: 292068184}
   - component: {fileID: 292068183}
   - component: {fileID: 292068182}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Pawn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1415,8 +1419,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   IsWhite: 1
-  _placementHandler: {fileID: 0}
+  placementHandler: {fileID: 0}
   possibleMoves: []
+  capturedMoves: []
 --- !u!114 &292068184
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1596,7 +1601,7 @@ GameObject:
   - component: {fileID: 309589166}
   - component: {fileID: 309589168}
   - component: {fileID: 309589167}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Pawn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1615,7 +1620,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1454864230}
-  m_RootOrder: 10
+  m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &309589165
 SpriteRenderer:
@@ -1721,8 +1726,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   IsWhite: 0
-  _placementHandler: {fileID: 0}
+  placementHandler: {fileID: 0}
   possibleMoves: []
+  capturedMoves: []
 --- !u!1001 &348273156
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1899,7 +1905,7 @@ GameObject:
   - component: {fileID: 354243241}
   - component: {fileID: 354243242}
   - component: {fileID: 354243243}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Bishop
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2024,8 +2030,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   IsWhite: 0
-  _placementHandler: {fileID: 0}
+  placementHandler: {fileID: 0}
   possibleMoves: []
+  capturedMoves: []
 --- !u!1 &361327009
 GameObject:
   m_ObjectHideFlags: 0
@@ -2307,7 +2314,7 @@ GameObject:
   - component: {fileID: 409402679}
   - component: {fileID: 409402682}
   - component: {fileID: 409402681}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Pawn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2326,7 +2333,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1454864230}
-  m_RootOrder: 15
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &409402679
 MonoBehaviour:
@@ -2432,8 +2439,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   IsWhite: 0
-  _placementHandler: {fileID: 0}
+  placementHandler: {fileID: 0}
   possibleMoves: []
+  capturedMoves: []
 --- !u!1 &418959813
 GameObject:
   m_ObjectHideFlags: 0
@@ -2581,7 +2589,7 @@ GameObject:
   - component: {fileID: 436799128}
   - component: {fileID: 436799130}
   - component: {fileID: 436799129}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Pawn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2706,8 +2714,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   IsWhite: 0
-  _placementHandler: {fileID: 0}
+  placementHandler: {fileID: 0}
   possibleMoves: []
+  capturedMoves: []
 --- !u!1 &451512796
 GameObject:
   m_ObjectHideFlags: 0
@@ -2721,7 +2730,7 @@ GameObject:
   - component: {fileID: 451512799}
   - component: {fileID: 451512800}
   - component: {fileID: 451512801}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: King
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2846,8 +2855,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   IsWhite: 0
-  _placementHandler: {fileID: 0}
+  placementHandler: {fileID: 0}
   possibleMoves: []
+  capturedMoves: []
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -3078,7 +3088,7 @@ GameObject:
   - component: {fileID: 571837470}
   - component: {fileID: 571837469}
   - component: {fileID: 571837468}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Pawn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3097,7 +3107,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1213835014}
-  m_RootOrder: 10
+  m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!61 &571837468
 BoxCollider2D:
@@ -3138,8 +3148,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   IsWhite: 1
-  _placementHandler: {fileID: 0}
+  placementHandler: {fileID: 0}
   possibleMoves: []
+  capturedMoves: []
 --- !u!114 &571837470
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3352,7 +3363,7 @@ GameObject:
   - component: {fileID: 708857704}
   - component: {fileID: 708857703}
   - component: {fileID: 708857702}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Queen
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3386,8 +3397,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   IsWhite: 1
-  _placementHandler: {fileID: 0}
+  placementHandler: {fileID: 0}
   possibleMoves: []
+  capturedMoves: []
 --- !u!61 &708857703
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -3492,7 +3504,7 @@ GameObject:
   - component: {fileID: 726858087}
   - component: {fileID: 726858086}
   - component: {fileID: 726858085}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Pawn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3511,7 +3523,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1213835014}
-  m_RootOrder: 11
+  m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!61 &726858085
 BoxCollider2D:
@@ -3552,8 +3564,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   IsWhite: 1
-  _placementHandler: {fileID: 0}
+  placementHandler: {fileID: 0}
   possibleMoves: []
+  capturedMoves: []
 --- !u!114 &726858087
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3664,7 +3677,7 @@ GameObject:
   - component: {fileID: 755527377}
   - component: {fileID: 755527378}
   - component: {fileID: 755527379}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Knight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3789,8 +3802,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   IsWhite: 0
-  _placementHandler: {fileID: 0}
+  placementHandler: {fileID: 0}
   possibleMoves: []
+  capturedMoves: []
 --- !u!1 &771506952
 GameObject:
   m_ObjectHideFlags: 0
@@ -3804,7 +3818,7 @@ GameObject:
   - component: {fileID: 771506956}
   - component: {fileID: 771506955}
   - component: {fileID: 771506954}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Pawn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3823,7 +3837,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1213835014}
-  m_RootOrder: 13
+  m_RootOrder: 14
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!61 &771506954
 BoxCollider2D:
@@ -3864,8 +3878,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   IsWhite: 1
-  _placementHandler: {fileID: 0}
+  placementHandler: {fileID: 0}
   possibleMoves: []
+  capturedMoves: []
 --- !u!114 &771506956
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3944,7 +3959,7 @@ GameObject:
   - component: {fileID: 846374353}
   - component: {fileID: 846374352}
   - component: {fileID: 846374351}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Pawn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3963,7 +3978,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1213835014}
-  m_RootOrder: 9
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!61 &846374351
 BoxCollider2D:
@@ -4004,8 +4019,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   IsWhite: 1
-  _placementHandler: {fileID: 0}
+  placementHandler: {fileID: 0}
   possibleMoves: []
+  capturedMoves: []
 --- !u!114 &846374353
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4218,7 +4234,7 @@ GameObject:
   - component: {fileID: 969461838}
   - component: {fileID: 969461840}
   - component: {fileID: 969461839}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Pawn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4237,7 +4253,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1454864230}
-  m_RootOrder: 14
+  m_RootOrder: 15
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &969461837
 SpriteRenderer:
@@ -4343,8 +4359,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   IsWhite: 0
-  _placementHandler: {fileID: 0}
+  placementHandler: {fileID: 0}
   possibleMoves: []
+  capturedMoves: []
 --- !u!1 &1009644909
 GameObject:
   m_ObjectHideFlags: 0
@@ -4492,7 +4509,7 @@ GameObject:
   - component: {fileID: 1062153400}
   - component: {fileID: 1062153399}
   - component: {fileID: 1062153398}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Pawn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4511,7 +4528,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1213835014}
-  m_RootOrder: 12
+  m_RootOrder: 13
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!61 &1062153398
 BoxCollider2D:
@@ -4552,8 +4569,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   IsWhite: 1
-  _placementHandler: {fileID: 0}
+  placementHandler: {fileID: 0}
   possibleMoves: []
+  capturedMoves: []
 --- !u!114 &1062153400
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4632,7 +4650,7 @@ GameObject:
   - component: {fileID: 1121333087}
   - component: {fileID: 1121333086}
   - component: {fileID: 1121333085}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Pawn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4651,7 +4669,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1213835014}
-  m_RootOrder: 14
+  m_RootOrder: 15
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!61 &1121333085
 BoxCollider2D:
@@ -4692,8 +4710,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   IsWhite: 1
-  _placementHandler: {fileID: 0}
+  placementHandler: {fileID: 0}
   possibleMoves: []
+  capturedMoves: []
 --- !u!114 &1121333087
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4772,7 +4791,7 @@ GameObject:
   - component: {fileID: 1126575668}
   - component: {fileID: 1126575670}
   - component: {fileID: 1126575669}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Pawn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4791,7 +4810,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1454864230}
-  m_RootOrder: 11
+  m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &1126575667
 SpriteRenderer:
@@ -4897,8 +4916,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   IsWhite: 0
-  _placementHandler: {fileID: 0}
+  placementHandler: {fileID: 0}
   possibleMoves: []
+  capturedMoves: []
 --- !u!1 &1132531866
 GameObject:
   m_ObjectHideFlags: 0
@@ -4912,7 +4932,7 @@ GameObject:
   - component: {fileID: 1132531870}
   - component: {fileID: 1132531869}
   - component: {fileID: 1132531868}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Knight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4946,8 +4966,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   IsWhite: 1
-  _placementHandler: {fileID: 0}
+  placementHandler: {fileID: 0}
   possibleMoves: []
+  capturedMoves: []
 --- !u!61 &1132531869
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -5209,13 +5230,13 @@ Transform:
   - {fileID: 1374253001}
   - {fileID: 110156598}
   - {fileID: 292068181}
+  - {fileID: 2116761433}
   - {fileID: 846374350}
   - {fileID: 571837467}
   - {fileID: 726858084}
   - {fileID: 1062153397}
   - {fileID: 771506953}
   - {fileID: 1121333084}
-  - {fileID: 2116761433}
   m_Father: {fileID: 751211344}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -5299,7 +5320,7 @@ GameObject:
   - component: {fileID: 1285433206}
   - component: {fileID: 1285433207}
   - component: {fileID: 1285433208}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Bishop
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5424,8 +5445,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   IsWhite: 0
-  _placementHandler: {fileID: 0}
+  placementHandler: {fileID: 0}
   possibleMoves: []
+  capturedMoves: []
 --- !u!1 &1328010219
 GameObject:
   m_ObjectHideFlags: 0
@@ -5573,7 +5595,7 @@ GameObject:
   - component: {fileID: 1337868908}
   - component: {fileID: 1337868907}
   - component: {fileID: 1337868906}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Rook
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5607,8 +5629,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   IsWhite: 1
-  _placementHandler: {fileID: 0}
+  placementHandler: {fileID: 0}
   possibleMoves: []
+  capturedMoves: []
 --- !u!61 &1337868907
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -5713,7 +5736,7 @@ GameObject:
   - component: {fileID: 1342563079}
   - component: {fileID: 1342563080}
   - component: {fileID: 1342563081}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Knight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5838,8 +5861,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   IsWhite: 0
-  _placementHandler: {fileID: 0}
+  placementHandler: {fileID: 0}
   possibleMoves: []
+  capturedMoves: []
 --- !u!1 &1374253000
 GameObject:
   m_ObjectHideFlags: 0
@@ -5853,7 +5877,7 @@ GameObject:
   - component: {fileID: 1374253004}
   - component: {fileID: 1374253003}
   - component: {fileID: 1374253002}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Bishop
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5887,8 +5911,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   IsWhite: 1
-  _placementHandler: {fileID: 0}
+  placementHandler: {fileID: 0}
   possibleMoves: []
+  capturedMoves: []
 --- !u!61 &1374253003
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -6086,13 +6111,13 @@ Transform:
   - {fileID: 354243239}
   - {fileID: 1285433204}
   - {fileID: 436799126}
+  - {fileID: 409402678}
   - {fileID: 1723691866}
   - {fileID: 309589164}
   - {fileID: 1126575666}
   - {fileID: 1486999843}
   - {fileID: 1707383399}
   - {fileID: 969461836}
-  - {fileID: 409402678}
   m_Father: {fileID: 751211344}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -6304,7 +6329,7 @@ GameObject:
   - component: {fileID: 1486999845}
   - component: {fileID: 1486999847}
   - component: {fileID: 1486999846}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Pawn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6323,7 +6348,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1454864230}
-  m_RootOrder: 12
+  m_RootOrder: 13
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &1486999844
 SpriteRenderer:
@@ -6429,8 +6454,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   IsWhite: 0
-  _placementHandler: {fileID: 0}
+  placementHandler: {fileID: 0}
   possibleMoves: []
+  capturedMoves: []
 --- !u!1 &1491303169
 GameObject:
   m_ObjectHideFlags: 0
@@ -6916,7 +6942,7 @@ GameObject:
   - component: {fileID: 1707383401}
   - component: {fileID: 1707383403}
   - component: {fileID: 1707383402}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Pawn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6935,7 +6961,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1454864230}
-  m_RootOrder: 13
+  m_RootOrder: 14
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &1707383400
 SpriteRenderer:
@@ -7041,8 +7067,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   IsWhite: 0
-  _placementHandler: {fileID: 0}
+  placementHandler: {fileID: 0}
   possibleMoves: []
+  capturedMoves: []
 --- !u!1 &1723691865
 GameObject:
   m_ObjectHideFlags: 0
@@ -7056,7 +7083,7 @@ GameObject:
   - component: {fileID: 1723691868}
   - component: {fileID: 1723691870}
   - component: {fileID: 1723691869}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Pawn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7075,7 +7102,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1454864230}
-  m_RootOrder: 9
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &1723691867
 SpriteRenderer:
@@ -7181,8 +7208,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   IsWhite: 0
-  _placementHandler: {fileID: 0}
+  placementHandler: {fileID: 0}
   possibleMoves: []
+  capturedMoves: []
 --- !u!1 &1751631076
 GameObject:
   m_ObjectHideFlags: 0
@@ -7560,7 +7588,7 @@ GameObject:
   - component: {fileID: 1926350494}
   - component: {fileID: 1926350493}
   - component: {fileID: 1926350492}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: King
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7594,8 +7622,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   IsWhite: 1
-  _placementHandler: {fileID: 0}
+  placementHandler: {fileID: 0}
   possibleMoves: []
+  capturedMoves: []
 --- !u!61 &1926350493
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -7700,7 +7729,7 @@ GameObject:
   - component: {fileID: 2003609499}
   - component: {fileID: 2003609500}
   - component: {fileID: 2003609501}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Rook
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7825,8 +7854,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   IsWhite: 0
-  _placementHandler: {fileID: 0}
+  placementHandler: {fileID: 0}
   possibleMoves: []
+  capturedMoves: []
 --- !u!1 &2059979822
 GameObject:
   m_ObjectHideFlags: 0
@@ -7974,7 +8004,7 @@ GameObject:
   - component: {fileID: 2107489659}
   - component: {fileID: 2107489658}
   - component: {fileID: 2107489657}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Rook
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -8008,8 +8038,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   IsWhite: 1
-  _placementHandler: {fileID: 0}
+  placementHandler: {fileID: 0}
   possibleMoves: []
+  capturedMoves: []
 --- !u!61 &2107489658
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -8180,7 +8211,7 @@ GameObject:
   - component: {fileID: 2116761436}
   - component: {fileID: 2116761435}
   - component: {fileID: 2116761434}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Pawn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -8199,7 +8230,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1213835014}
-  m_RootOrder: 15
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!61 &2116761434
 BoxCollider2D:
@@ -8240,8 +8271,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   IsWhite: 1
-  _placementHandler: {fileID: 0}
+  placementHandler: {fileID: 0}
   possibleMoves: []
+  capturedMoves: []
 --- !u!114 &2116761436
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -5,9 +5,8 @@ namespace Chess.Scripts.Core
 {
     public class ChessPlayerPlacementHandler : MonoBehaviour
     {
-        [Range(0, 7)]
-        [SerializeField] private int row, column;
-
+        [Range(0, 7)] [SerializeField] private int row, column;
+        
         public delegate void PositionChanged(ChessPiece piece);
 
         public event PositionChanged OnPositionChanged;
@@ -34,6 +33,13 @@ namespace Chess.Scripts.Core
 
         public Vector2Int GetPosition()
         {
+            return new Vector2Int(row, column);
+        }
+
+        public Vector2Int SetPosition(Vector2Int position)
+        {
+            row = position.x;
+            column = position.y;
             return new Vector2Int(row, column);
         }
     }

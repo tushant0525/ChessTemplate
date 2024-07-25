@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Bishop : ChessPiece
 {
-    public override List<Vector2Int> GetPossibleMoves()
+    public override void CalculatePossibleMoves()
     {
         throw new System.NotImplementedException();
     }

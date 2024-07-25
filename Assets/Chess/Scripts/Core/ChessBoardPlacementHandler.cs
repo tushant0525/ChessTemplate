@@ -16,15 +16,21 @@ public sealed class ChessBoardPlacementHandler : MonoBehaviour
     internal static ChessBoardPlacementHandler Instance;
 
     private ChessPiece selectedPiece;
-    private ChessPlayerPlacementHandler[] _availableChessPieces;
+    private List<ChessPlayerPlacementHandler> _availableChessPieces;
     [SerializeField] private bool isWhiteTurn = true; // Assuming white starts first
+
+    private LayerMask whitePiecesLayer;
+    private LayerMask blackPiecesLayer;
+    private LayerMask emptyCellsLayer;
 
     private void Awake()
     {
         Instance = this;
-        _availableChessPieces = new ChessPlayerPlacementHandler[16];
-        _availableChessPieces = FindObjectsOfType<ChessPlayerPlacementHandler>();
+        _availableChessPieces = new List<ChessPlayerPlacementHandler>(FindObjectsOfType<ChessPlayerPlacementHandler>());
         _chessPieces = new ChessPiece[8, 8];
+        whitePiecesLayer = LayerMask.GetMask("WhitePieces");
+        blackPiecesLayer = LayerMask.GetMask("BlackPieces");
+        emptyCellsLayer = LayerMask.GetMask("Tiles");
         GenerateArray();
         InitializeChessPieces();
     }
@@ -49,7 +55,7 @@ public sealed class ChessBoardPlacementHandler : MonoBehaviour
     {
         ClearHighlights();
         InitializeChessPieces();
-        HighlightPossibleMoves(piece);
+        // HighlightPossibleMoves(piece);
     }
 
     private void GenerateArray()
@@ -61,7 +67,6 @@ public sealed class ChessBoardPlacementHandler : MonoBehaviour
             for (var j = 0; j < 8; j++)
             {
                 _chessBoard[i, j] = _rowsArray[i].transform.GetChild(j).gameObject;
-                // Debug.Log(" Chess piece at "+i+","+j+" is "+_chessBoard[i, j].name);
             }
         }
     }
@@ -88,7 +93,7 @@ public sealed class ChessBoardPlacementHandler : MonoBehaviour
         }
     }
 
-    internal void Highlight(int row, int col)
+    internal void Highlight(int row, int col,Color selecteColor)
     {
         var tile = GetTile(row, col).transform;
 
@@ -101,14 +106,9 @@ public sealed class ChessBoardPlacementHandler : MonoBehaviour
         GameObject highlightedTile =
             Instantiate(_highlightPrefab, tile.transform.position, Quaternion.identity, tile.transform);
 
-        if (isWhiteTurn)
-        {
-            highlightedTile.GetComponent<SpriteRenderer>().color = Color.red;
-        }
-        else
-        {
-            highlightedTile.GetComponent<SpriteRenderer>().color = Color.green;
-        }
+        
+            highlightedTile.GetComponent<SpriteRenderer>().color = selecteColor;
+            
     }
 
     internal void ClearHighlights()
@@ -139,36 +139,36 @@ public sealed class ChessBoardPlacementHandler : MonoBehaviour
     private void HandleMouseClick()
     {
         Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        RaycastHit2D hit = Physics2D.Raycast(mousePosition, Vector2.zero);
+        LayerMask layerMask = isWhiteTurn ? (whitePiecesLayer | emptyCellsLayer) : (blackPiecesLayer | emptyCellsLayer);
+
+        RaycastHit2D hit = Physics2D.Raycast(mousePosition, Vector2.zero, Mathf.Infinity, layerMask);
 
         if (hit.collider != null)
         {
             ChessPiece clickedPiece = hit.transform.GetComponent<ChessPiece>();
-        
 
             if (clickedPiece != null)
             {
-                
-                if (isWhiteTurn && clickedPiece.IsWhite)
-                {
-                    SelectPiece(clickedPiece);
-                }
-                else if (!isWhiteTurn && !clickedPiece.IsWhite)
+                if ((isWhiteTurn && clickedPiece.IsWhite) || (!isWhiteTurn && !clickedPiece.IsWhite))
                 {
                     SelectPiece(clickedPiece);
                 }
                 else
                 {
-                    Debug.Log("Invalid move.");
+                    Debug.Log("Invalid move while selecting piece.");
                 }
             }
-            else
+            else if (selectedPiece != null)
             {
                 Vector2Int clickedPosition = GetTilePosition(hit.transform.position);
 
-                if (selectedPiece != null)
+                if (selectedPiece.possibleMoves.Contains(clickedPosition))
                 {
                     TryMovePiece(clickedPosition);
+                }
+                else
+                {
+                    Debug.Log("Invalid move while moving piece");
                 }
             }
         }
@@ -177,6 +177,7 @@ public sealed class ChessBoardPlacementHandler : MonoBehaviour
     private void SelectPiece(ChessPiece piece)
     {
         selectedPiece = piece;
+        selectedPiece.CalculatePossibleMoves();
         ClearHighlights();
         HighlightPossibleMoves(piece);
     }
@@ -195,11 +196,15 @@ public sealed class ChessBoardPlacementHandler : MonoBehaviour
 
     private void HighlightPossibleMoves(ChessPiece piece)
     {
-        List<Vector2Int> possibleMoves = piece.GetPossibleMoves();
+        List<Vector2Int> possibleMoves = piece.possibleMoves;
 
         foreach (Vector2Int move in possibleMoves)
         {
-            Highlight(move.x, move.y);
+            Highlight(move.x, move.y,Color.green);
+        }
+        foreach (Vector2Int move in piece.capturedMoves)
+        {
+            Highlight(move.x, move.y,Color.red);
         }
     }
 
@@ -211,7 +216,15 @@ public sealed class ChessBoardPlacementHandler : MonoBehaviour
 
     private void MovePiece(ChessPiece piece, Vector2Int targetPosition)
     {
+        if (CheckCapturedMoves(piece, targetPosition))
+        {
+            //_chessPieces[targetPosition.x, targetPosition.y].gameObject.SetActive(false);
+            Destroy(_chessPieces[targetPosition.x, targetPosition.y].gameObject);
+            //remove this piece from the list of available pieces
+            _availableChessPieces.Remove(_chessPieces[targetPosition.x, targetPosition.y].placementHandler);
+        }
         Vector2Int currentPosition = GetCellPosition(piece);
+        piece.placementHandler.SetPosition(targetPosition);
         _chessPieces[currentPosition.x, currentPosition.y] = null;
         _chessPieces[targetPosition.x, targetPosition.y] = piece;
 
@@ -221,14 +234,9 @@ public sealed class ChessBoardPlacementHandler : MonoBehaviour
 
     public Vector2Int GetCellPosition(ChessPiece piece)
     {
-        return piece._placementHandler.GetPosition();
+        return piece.placementHandler.GetPosition();
     }
 
-    public Vector2 GetTilePosition(Vector2Int position)
-    {
-        return new Vector2(_chessBoard[position.x, position.y].transform.position.x,
-            _chessBoard[position.x, position.y].transform.position.y);
-    }
 
     public Vector2Int GetTilePosition(Vector3 position)
     {
@@ -258,6 +266,12 @@ public sealed class ChessBoardPlacementHandler : MonoBehaviour
         }
 
         return null;
+    }
+
+    private bool CheckCapturedMoves(ChessPiece piece, Vector2Int targetPosition)
+    {
+        List<Vector2Int> capturedMoves = piece.capturedMoves;
+        return capturedMoves.Contains(targetPosition);
     }
 
     #region Highlight Testing
