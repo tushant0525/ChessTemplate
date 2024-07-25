@@ -61,9 +61,17 @@ public class Pawn : ChessPiece
     {
         base.Move(newPosition);
         hasMoved = true;
+        //Write pawn promotion code when it reaches end
+        if ((!IsWhite && placementHandler.GetPosition().x == 7) || (IsWhite && placementHandler.GetPosition().x == 0))
+        {
+            UIManager.Instance.ShowPawnPromotionPanel(IsWhite,this);
+        }
+      
+
+
+       
     }
 
-    
 
     // TODO: Implement promotion when pawn reaches the end of the board
 }

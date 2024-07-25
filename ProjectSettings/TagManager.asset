@@ -41,3 +41,6 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: PromotionPanel
+    uniqueID: 645980283
+    locked: 0

@@ -14,7 +14,7 @@ public sealed class ChessBoardPlacementHandler : MonoBehaviour
     private GameObject[,] _chessBoard;
     private ChessPiece[,] _chessPieces;
 
-    internal static ChessBoardPlacementHandler Instance;
+    internal static ChessBoardPlacementHandler Instance { get; private set; }
 
     private ChessPiece selectedPiece;
     private List<ChessPlayerPlacementHandler> _availableChessPieces;
@@ -25,7 +25,15 @@ public sealed class ChessBoardPlacementHandler : MonoBehaviour
 
     private void Awake()
     {
-        Instance = this;
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+
         _availableChessPieces = new List<ChessPlayerPlacementHandler>(FindObjectsOfType<ChessPlayerPlacementHandler>());
         _chessPieces = new ChessPiece[8, 8];
         whitePiecesLayer = LayerMask.GetMask("WhitePieces");
@@ -107,7 +115,8 @@ public sealed class ChessBoardPlacementHandler : MonoBehaviour
             return;
         }
 
-        GameObject highlightedTile = Instantiate(_highlightPrefab, tile.transform.position, Quaternion.identity, tile.transform);
+        GameObject highlightedTile =
+            Instantiate(_highlightPrefab, tile.transform.position, Quaternion.identity, tile.transform);
         highlightedTile.GetComponent<SpriteRenderer>().color = selecteColor;
     }
 
@@ -206,6 +215,7 @@ public sealed class ChessBoardPlacementHandler : MonoBehaviour
         {
             Highlight(move.x, move.y, Color.green);
         }
+
         foreach (Vector2Int move in piece.capturedMoves)
         {
             Highlight(move.x, move.y, Color.red);
@@ -227,6 +237,7 @@ public sealed class ChessBoardPlacementHandler : MonoBehaviour
             Destroy(_chessPieces[targetPosition.x, targetPosition.y].gameObject);
             _availableChessPieces.Remove(_chessPieces[targetPosition.x, targetPosition.y].placementHandler);
         }
+
         Vector2Int currentPosition = GetCellPosition(piece);
         piece.placementHandler.SetPosition(targetPosition);
         _chessPieces[currentPosition.x, currentPosition.y] = null;
@@ -278,6 +289,50 @@ public sealed class ChessBoardPlacementHandler : MonoBehaviour
     {
         List<Vector2Int> capturedMoves = piece.capturedMoves;
         return capturedMoves.Contains(targetPosition);
+    }
+
+    // Returns all chess pieces currently on the board
+    public IEnumerable<ChessPiece> GetAllPieces()
+    {
+        foreach (ChessPiece chessPiece in _chessPieces)
+        {
+            // ChessPiece piece = chessPiece.GetComponent<ChessPiece>();
+
+            if (chessPiece != null)
+            {
+                yield return chessPiece;
+            }
+        }
+    }
+
+    public void PromotePawn(string name, Sprite availablePromotionSprite, ChessPiece pawnToPromote)
+    {
+        pawnToPromote.GetComponent<SpriteRenderer>().sprite = availablePromotionSprite;
+        pawnToPromote.gameObject.name = name;
+        ChessPiece piece = null;
+
+        if (name == "Queen")
+        {
+            piece
+                = pawnToPromote.gameObject.AddComponent<Queen>();
+        }
+        else if (name == "Rook")
+        {
+            piece = pawnToPromote.gameObject.AddComponent<Rook>();
+        }
+        else if (name == "Bishop")
+        {
+            piece = pawnToPromote.gameObject.AddComponent<Bishop>();
+        }
+        else if (name == "Knight")
+        {
+            piece = pawnToPromote.gameObject.AddComponent<Knight>();
+        }
+
+        piece.IsWhite = pawnToPromote.IsWhite;
+        Destroy(pawnToPromote.GetComponent<Pawn>());
+        //Add script of type of piece it is promoted to
+        //Remove script of pawn
     }
 
     #region Highlight Testing
