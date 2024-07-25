@@ -9,6 +9,7 @@ public sealed class ChessBoardPlacementHandler : MonoBehaviour
 {
     [SerializeField] private GameObject[] _rowsArray;
     [SerializeField] private GameObject _highlightPrefab;
+    [SerializeField] private bool isWhiteTurn = true; // Assuming white starts first
 
     private GameObject[,] _chessBoard;
     private ChessPiece[,] _chessPieces;
@@ -17,7 +18,6 @@ public sealed class ChessBoardPlacementHandler : MonoBehaviour
 
     private ChessPiece selectedPiece;
     private List<ChessPlayerPlacementHandler> _availableChessPieces;
-    [SerializeField] private bool isWhiteTurn = true; // Assuming white starts first
 
     private LayerMask whitePiecesLayer;
     private LayerMask blackPiecesLayer;
@@ -51,13 +51,14 @@ public sealed class ChessBoardPlacementHandler : MonoBehaviour
         }
     }
 
+    // Updates the position of the piece when it changes
     private void UpdatePiecePosition(ChessPiece piece)
     {
         ClearHighlights();
         InitializeChessPieces();
-        // HighlightPossibleMoves(piece);
     }
 
+    // Generates the chessboard array
     private void GenerateArray()
     {
         _chessBoard = new GameObject[8, 8];
@@ -71,6 +72,7 @@ public sealed class ChessBoardPlacementHandler : MonoBehaviour
         }
     }
 
+    // Initializes the chess pieces on the board
     private void InitializeChessPieces()
     {
         foreach (ChessPlayerPlacementHandler chessPiece in _availableChessPieces)
@@ -80,6 +82,7 @@ public sealed class ChessBoardPlacementHandler : MonoBehaviour
         }
     }
 
+    // Returns the tile at the specified position
     internal GameObject GetTile(int i, int j)
     {
         try
@@ -93,7 +96,8 @@ public sealed class ChessBoardPlacementHandler : MonoBehaviour
         }
     }
 
-    internal void Highlight(int row, int col,Color selecteColor)
+    // Highlights the tile at the specified position with the selected color
+    internal void Highlight(int row, int col, Color selecteColor)
     {
         var tile = GetTile(row, col).transform;
 
@@ -103,14 +107,11 @@ public sealed class ChessBoardPlacementHandler : MonoBehaviour
             return;
         }
 
-        GameObject highlightedTile =
-            Instantiate(_highlightPrefab, tile.transform.position, Quaternion.identity, tile.transform);
-
-        
-            highlightedTile.GetComponent<SpriteRenderer>().color = selecteColor;
-            
+        GameObject highlightedTile = Instantiate(_highlightPrefab, tile.transform.position, Quaternion.identity, tile.transform);
+        highlightedTile.GetComponent<SpriteRenderer>().color = selecteColor;
     }
 
+    // Clears all highlights from the board
     internal void ClearHighlights()
     {
         for (var i = 0; i < 8; i++)
@@ -136,6 +137,7 @@ public sealed class ChessBoardPlacementHandler : MonoBehaviour
         }
     }
 
+    // Handles mouse click events to select or move pieces
     private void HandleMouseClick()
     {
         Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
@@ -168,12 +170,13 @@ public sealed class ChessBoardPlacementHandler : MonoBehaviour
                 }
                 else
                 {
-                    Debug.Log("Invalid move while moving piece");
+                    Debug.Log("Invalid move while moving piece.");
                 }
             }
         }
     }
 
+    // Selects the specified piece and highlights possible moves
     private void SelectPiece(ChessPiece piece)
     {
         selectedPiece = piece;
@@ -182,6 +185,7 @@ public sealed class ChessBoardPlacementHandler : MonoBehaviour
         HighlightPossibleMoves(piece);
     }
 
+    // Tries to move the selected piece to the target position
     private void TryMovePiece(Vector2Int targetPosition)
     {
         if (IsMoveValid(selectedPiece, targetPosition))
@@ -193,34 +197,34 @@ public sealed class ChessBoardPlacementHandler : MonoBehaviour
         }
     }
 
-
+    // Highlights the possible moves for the specified piece
     private void HighlightPossibleMoves(ChessPiece piece)
     {
         List<Vector2Int> possibleMoves = piece.possibleMoves;
 
         foreach (Vector2Int move in possibleMoves)
         {
-            Highlight(move.x, move.y,Color.green);
+            Highlight(move.x, move.y, Color.green);
         }
         foreach (Vector2Int move in piece.capturedMoves)
         {
-            Highlight(move.x, move.y,Color.red);
+            Highlight(move.x, move.y, Color.red);
         }
     }
 
+    // Checks if the move to the target position is valid
     private bool IsMoveValid(ChessPiece piece, Vector2Int targetPosition)
     {
         List<Vector2Int> possibleMoves = piece.possibleMoves;
         return possibleMoves.Contains(targetPosition);
     }
 
+    // Moves the piece to the target position
     private void MovePiece(ChessPiece piece, Vector2Int targetPosition)
     {
         if (CheckCapturedMoves(piece, targetPosition))
         {
-            //_chessPieces[targetPosition.x, targetPosition.y].gameObject.SetActive(false);
             Destroy(_chessPieces[targetPosition.x, targetPosition.y].gameObject);
-            //remove this piece from the list of available pieces
             _availableChessPieces.Remove(_chessPieces[targetPosition.x, targetPosition.y].placementHandler);
         }
         Vector2Int currentPosition = GetCellPosition(piece);
@@ -232,12 +236,13 @@ public sealed class ChessBoardPlacementHandler : MonoBehaviour
         piece.Move(worldPosition);
     }
 
+    // Returns the cell position of the specified piece
     public Vector2Int GetCellPosition(ChessPiece piece)
     {
         return piece.placementHandler.GetPosition();
     }
 
-
+    // Returns the tile position for the specified world position
     public Vector2Int GetTilePosition(Vector3 position)
     {
         for (int i = 0; i < 8; i++)
@@ -254,7 +259,7 @@ public sealed class ChessBoardPlacementHandler : MonoBehaviour
         return new Vector2Int(-1, -1);
     }
 
-    // This method allows ChessPiece to get information about the board
+    // Returns the chess piece at the specified position
     public ChessPiece GetPieceAt(Vector2Int position)
     {
         foreach (var chessPiece in _availableChessPieces)
@@ -268,6 +273,7 @@ public sealed class ChessBoardPlacementHandler : MonoBehaviour
         return null;
     }
 
+    // Checks if the move to the target position captures an opponent's piece
     private bool CheckCapturedMoves(ChessPiece piece, Vector2Int targetPosition)
     {
         List<Vector2Int> capturedMoves = piece.capturedMoves;
