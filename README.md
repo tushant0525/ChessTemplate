@@ -24,7 +24,8 @@ Welcome to our 2D Chess Game built using Unity! This project aims to provide an 
 
 
 ### Gameplay
-![](https://giphy.com/gifs/KvoB4sf6c0VeUNk2Qn)
+https://github.com/user-attachments/assets/fd9ea321-40b6-4ce8-be94-1bcc57d5dabd
+
 
 
 ## Installation
