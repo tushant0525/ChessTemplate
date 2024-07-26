@@ -1,6 +1,5 @@
 # 2D Chess Game in Unity
 
-![Game Logo](./images/logo.png)
 
 ## Table of Contents
 - [Introduction](#introduction)
