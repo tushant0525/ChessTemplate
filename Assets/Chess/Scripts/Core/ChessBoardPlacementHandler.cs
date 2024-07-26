@@ -160,7 +160,7 @@ public sealed class ChessBoardPlacementHandler : MonoBehaviour
         {
             ChessPiece clickedPiece = hit.transform.GetComponent<ChessPiece>();
 
-            if (clickedPiece != null&&selectedPiece==null)
+            if (clickedPiece != null&&selectedPiece!=clickedPiece)
             {
                 if ((isWhiteTurn && clickedPiece.IsWhite) || (!isWhiteTurn && !clickedPiece.IsWhite))
                 {
