@@ -21,8 +21,6 @@ public abstract class ChessPiece : MonoBehaviour
     public virtual void Move(Vector3 newPosition)
     {
         transform.position = newPosition;
-        // CalculatePossibleMoves();
-        //possibleMoves.Clear();
     }
 
     // Abstract method to calculate possible moves, to be implemented in derived classes
