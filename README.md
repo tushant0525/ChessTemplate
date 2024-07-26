@@ -5,7 +5,7 @@
 ## Table of Contents
 - [Introduction](#introduction)
 - [Features](#features)
-- [Screenshots](#screenshots)
+- [Gameplay](#Gameplay)
 - [Installation](#installation)
 - [How to Play](#how-to-play)
 
@@ -19,12 +19,9 @@ Welcome to our 2D Chess Game built using Unity! This project aims to provide an 
 - **Classic Chess Gameplay**: Enjoy the timeless game of chess with standard rules.
 - **Check and Checkmate Detection**: Accurate detection of game states.
 
-## Screenshots
-
-
-
 ### Gameplay
-https://github.com/user-attachments/assets/fd9ea321-40b6-4ce8-be94-1bcc57d5dabd
+![Queen](https://github.com/user-attachments/assets/6bdd3d64-15cf-4f73-93b3-a83adbccd3d1)
+
 
 
 
