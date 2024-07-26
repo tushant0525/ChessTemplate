@@ -23,6 +23,8 @@ public sealed class ChessBoardPlacementHandler : MonoBehaviour
     private LayerMask blackPiecesLayer;
     private LayerMask emptyCellsLayer;
 
+    private InputMap _inputMap;
+
     private void Awake()
     {
         if (Instance == null)
@@ -34,6 +36,7 @@ public sealed class ChessBoardPlacementHandler : MonoBehaviour
             Destroy(gameObject);
         }
 
+        _inputMap = new InputMap();
         _availableChessPieces = new List<ChessPlayerPlacementHandler>(FindObjectsOfType<ChessPlayerPlacementHandler>());
         whitePiecesLayer = LayerMask.GetMask("WhitePieces");
         blackPiecesLayer = LayerMask.GetMask("BlackPieces");
@@ -45,6 +48,7 @@ public sealed class ChessBoardPlacementHandler : MonoBehaviour
 
     private void OnEnable()
     {
+        _inputMap.Enable();
         foreach (ChessPlayerPlacementHandler chessPiece in _availableChessPieces)
         {
             chessPiece.OnPositionChanged += UpdatePiecePosition;
@@ -53,6 +57,7 @@ public sealed class ChessBoardPlacementHandler : MonoBehaviour
 
     private void OnDisable()
     {
+        _inputMap.Disable();
         foreach (ChessPlayerPlacementHandler chessPiece in _availableChessPieces)
         {
             chessPiece.OnPositionChanged -= UpdatePiecePosition;
@@ -142,7 +147,7 @@ public sealed class ChessBoardPlacementHandler : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (_inputMap.Player.Touch.IsPressed())
         {
             HandleMouseClick();
         }
@@ -160,7 +165,7 @@ public sealed class ChessBoardPlacementHandler : MonoBehaviour
         {
             ChessPiece clickedPiece = hit.transform.GetComponent<ChessPiece>();
 
-            if (clickedPiece != null&&selectedPiece!=clickedPiece)
+            if (clickedPiece != null && selectedPiece != clickedPiece)
             {
                 if ((isWhiteTurn && clickedPiece.IsWhite) || (!isWhiteTurn && !clickedPiece.IsWhite))
                 {
