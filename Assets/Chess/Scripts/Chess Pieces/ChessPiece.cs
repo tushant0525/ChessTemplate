@@ -16,26 +16,23 @@ public abstract class ChessPiece : MonoBehaviour
         placementHandler = GetComponent<ChessPlayerPlacementHandler>();
     }
 
+
     // Move the piece to the new position and clear possible moves
     public virtual void Move(Vector3 newPosition)
     {
         transform.position = newPosition;
-        possibleMoves.Clear();
+        // CalculatePossibleMoves();
+        //possibleMoves.Clear();
     }
 
     // Abstract method to calculate possible moves, to be implemented in derived classes
     public abstract void CalculatePossibleMoves();
 
-    // Check if the position is within the bounds of the board
-    protected bool IsValidBoardPosition(Vector2Int position)
-    {
-        return position.x >= 0 && position.x < 8 && position.y >= 0 && position.y < 8;
-    }
 
     // Check if the pawn can capture an opponent piece at the given position
     protected bool CanCapture(Vector2Int position)
     {
-        if (!IsValidBoardPosition(position))
+        if (!ChessBoardPlacementHandler.Instance.IsValidBoardPosition(position))
             return false;
 
         ChessPiece pieceAtPosition = ChessBoardPlacementHandler.Instance.GetPieceAt(position);

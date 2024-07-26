@@ -35,10 +35,10 @@ public sealed class ChessBoardPlacementHandler : MonoBehaviour
         }
 
         _availableChessPieces = new List<ChessPlayerPlacementHandler>(FindObjectsOfType<ChessPlayerPlacementHandler>());
-        _chessPieces = new ChessPiece[8, 8];
         whitePiecesLayer = LayerMask.GetMask("WhitePieces");
         blackPiecesLayer = LayerMask.GetMask("BlackPieces");
         emptyCellsLayer = LayerMask.GetMask("Tiles");
+        UIManager.Instance.SetTurnText(isWhiteTurn);
         GenerateArray();
         InitializeChessPieces();
     }
@@ -83,6 +83,8 @@ public sealed class ChessBoardPlacementHandler : MonoBehaviour
     // Initializes the chess pieces on the board
     private void InitializeChessPieces()
     {
+        _chessPieces = new ChessPiece[8, 8];
+
         foreach (ChessPlayerPlacementHandler chessPiece in _availableChessPieces)
         {
             _chessPieces[chessPiece.GetPosition().x, chessPiece.GetPosition().y] =
@@ -203,6 +205,7 @@ public sealed class ChessBoardPlacementHandler : MonoBehaviour
             ClearHighlights();
             selectedPiece = null;
             isWhiteTurn = !isWhiteTurn;
+            UIManager.Instance.SetTurnText(isWhiteTurn);
         }
     }
 
@@ -273,7 +276,7 @@ public sealed class ChessBoardPlacementHandler : MonoBehaviour
     // Returns the chess piece at the specified position
     public ChessPiece GetPieceAt(Vector2Int position)
     {
-        foreach (var chessPiece in _availableChessPieces)
+        foreach (ChessPlayerPlacementHandler chessPiece in _availableChessPieces)
         {
             if (position.x == chessPiece.GetPosition().x && position.y == chessPiece.GetPosition().y)
             {
@@ -284,6 +287,30 @@ public sealed class ChessBoardPlacementHandler : MonoBehaviour
         return null;
     }
 
+    // Check if the position is within the bounds of the board
+    public bool IsValidBoardPosition(Vector2Int position)
+    {
+        return position.x >= 0 && position.x < 8 && position.y >= 0 && position.y < 8;
+    }
+
+
+    public void RemovePieceAt(Vector2Int position)
+    {
+        if (IsValidBoardPosition(position))
+        {
+            _chessPieces[position.x, position.y] = null;
+        }
+    }
+
+    public void PlacePieceAt(ChessPiece piece, Vector2Int position)
+    {
+        if (IsValidBoardPosition(position))
+        {
+            _chessPieces[position.x, position.y] = piece;
+            piece.placementHandler.SetPosition(position);
+        }
+    }
+
     // Checks if the move to the target position captures an opponent's piece
     private bool CheckCapturedMoves(ChessPiece piece, Vector2Int targetPosition)
     {
@@ -291,18 +318,20 @@ public sealed class ChessBoardPlacementHandler : MonoBehaviour
         return capturedMoves.Contains(targetPosition);
     }
 
-    // Returns all chess pieces currently on the board
-    public IEnumerable<ChessPiece> GetAllPieces()
+    // Returns all chess pieces currently on the board as a List
+    public List<ChessPiece> GetAllPieces()
     {
+        List<ChessPiece> activePieces = new List<ChessPiece>();
+
         foreach (ChessPiece chessPiece in _chessPieces)
         {
-            // ChessPiece piece = chessPiece.GetComponent<ChessPiece>();
-
             if (chessPiece != null)
             {
-                yield return chessPiece;
+                activePieces.Add(chessPiece);
             }
         }
+
+        return activePieces;
     }
 
     public void PromotePawn(string name, Sprite availablePromotionSprite, ChessPiece pawnToPromote)

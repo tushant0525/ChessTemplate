@@ -25,14 +25,14 @@ public class King : ChessPiece
 
         foreach (var move in moves)
         {
-            if (IsValidBoardPosition(move))
+            if (ChessBoardPlacementHandler.Instance.IsValidBoardPosition(move))
             {
                 ChessPiece pieceAtNewPosition = ChessBoardPlacementHandler.Instance.GetPieceAt(move);
 
                 if (pieceAtNewPosition == null || pieceAtNewPosition.IsWhite != IsWhite)
                 {
                     // Simulate the move to check if it leaves the King in check
-                    if (IsMoveSafe(currentPosition, move))
+                    if (IsMoveSafe(move))
                     {
                         possibleMoves.Add(move);
 
@@ -46,95 +46,85 @@ public class King : ChessPiece
         }
     }
 
-    private bool IsMoveSafe(Vector2Int currentPosition, Vector2Int newPosition)
+    public void CalculatePossibleMovesWithoutSafety()
     {
-        // Temporarily simulate the move
-        ChessPiece[,] originalBoardState = CloneBoardState();
+        possibleMoves.Clear();
+        capturedMoves.Clear();
 
-        // Move the piece temporarily
-        ChessPiece pieceAtCurrentPosition = ChessBoardPlacementHandler.Instance.GetPieceAt(currentPosition);
-        ChessPiece pieceAtNewPosition = ChessBoardPlacementHandler.Instance.GetPieceAt(newPosition);
+        Vector2Int currentPosition = placementHandler.GetPosition();
 
-        if (pieceAtCurrentPosition != null)
+        // Define all possible move directions for the King
+        Vector2Int[] moves =
         {
-            pieceAtCurrentPosition.placementHandler.SetPosition(newPosition);
-        }
+            new Vector2Int(currentPosition.x + 1, currentPosition.y), // Move Right
+            new Vector2Int(currentPosition.x - 1, currentPosition.y), // Move Left
+            new Vector2Int(currentPosition.x, currentPosition.y + 1), // Move Up
+            new Vector2Int(currentPosition.x, currentPosition.y - 1), // Move Down
+            new Vector2Int(currentPosition.x + 1, currentPosition.y + 1), // Move Up-Right
+            new Vector2Int(currentPosition.x - 1, currentPosition.y + 1), // Move Up-Left
+            new Vector2Int(currentPosition.x + 1, currentPosition.y - 1), // Move Down-Right
+            new Vector2Int(currentPosition.x - 1, currentPosition.y - 1) // Move Down-Left
+        };
 
-        if (pieceAtNewPosition != null)
+        foreach (var move in moves)
         {
-            // Temporarily remove the piece from the board
-            pieceAtNewPosition.placementHandler.SetPosition(new Vector2Int(-1, -1)); // Move it off the board
+            if (ChessBoardPlacementHandler.Instance.IsValidBoardPosition(move))
+            {
+                ChessPiece pieceAtNewPosition = ChessBoardPlacementHandler.Instance.GetPieceAt(move);
+
+                if (pieceAtNewPosition == null || pieceAtNewPosition.IsWhite != IsWhite)
+                {
+                    possibleMoves.Add(move);
+
+                    if (pieceAtNewPosition != null && pieceAtNewPosition.IsWhite != IsWhite)
+                    {
+                        capturedMoves.Add(move);
+                    }
+                }
+            }
         }
-
-        // Check if the King is in check after the move
-        bool isSafe = !IsKingInCheck();
-
-        // Restore the original board state
-        RestoreBoardState(originalBoardState);
-
-        return isSafe;
     }
 
-    private bool IsKingInCheck()
+    private bool IsMoveSafe(Vector2Int newPosition)
     {
-        // Get the current position of the King
-        Vector2Int kingPosition = placementHandler.GetPosition();
-
         // Check if any opponent piece can attack the King's position
         foreach (var piece in ChessBoardPlacementHandler.Instance.GetAllPieces())
         {
             if (piece.IsWhite != IsWhite)
             {
-                piece.CalculatePossibleMoves();
-
-                if (piece.possibleMoves.Contains(kingPosition))
+                // Special case for pawn capture moves
+                if (piece is Pawn)
                 {
-                    return true;
+                    Pawn pawn = (Pawn)piece;
+                    pawn.CalculatePossibleMovesWithDiagonals();
+
+                    if (piece.possibleMoves.Contains(newPosition))
+                    {
+                        return false;
+                    }
                 }
-            }
-        }
-
-        return false;
-    }
-
-    private ChessPiece[,] CloneBoardState()
-    {
-        ChessPiece[,] clone = new ChessPiece[8, 8];
-
-        for (int x = 0; x < 8; x++)
-        {
-            for (int y = 0; y < 8; y++)
-            {
-                clone[x, y] = ChessBoardPlacementHandler.Instance.GetPieceAt(new Vector2Int(x, y));
-            }
-        }
-
-        return clone;
-    }
-
-    private void RestoreBoardState(ChessPiece[,] originalBoardState)
-    {
-        for (int x = 0; x < 8; x++)
-        {
-            for (int y = 0; y < 8; y++)
-            {
-                ChessPiece piece = originalBoardState[x, y];
-                Vector2Int pos = new Vector2Int(x, y);
-
-                if (piece != null)
+                else if (piece is King)
                 {
-                    piece.placementHandler.SetPosition(pos);
+                    King king = (King)piece;
+                    king.CalculatePossibleMovesWithoutSafety();
+
+                    if (piece.possibleMoves.Contains(newPosition))
+                    {
+                        return false;
+                    }
                 }
                 else
                 {
-                    ChessPiece currentPiece = ChessBoardPlacementHandler.Instance.GetPieceAt(pos);
+                    piece.CalculatePossibleMoves();
 
-                    if (currentPiece != null)
+                    if (piece.possibleMoves.Contains(newPosition))
                     {
-                        currentPiece.placementHandler.SetPosition(pos);
+                        return false;
                     }
                 }
             }
         }
+
+        return true;
     }
 }

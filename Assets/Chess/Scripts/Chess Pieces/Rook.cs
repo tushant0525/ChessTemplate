@@ -31,7 +31,7 @@ public class Rook : ChessPiece
             newPosition = new Vector2Int(newPosition.x + xIncrement, newPosition.y + yIncrement);
 
             // Break the loop if the new position is outside the board boundaries
-            if (!IsValidBoardPosition(newPosition))
+            if (!ChessBoardPlacementHandler.Instance.IsValidBoardPosition(newPosition))
                 break;
 
             // Get the ChessPiece at the new position

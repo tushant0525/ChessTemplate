@@ -28,7 +28,7 @@ public class Bishop : ChessPiece
             newPosition = new Vector2Int(newPosition.x + xIncrement, newPosition.y + yIncrement);
             
             // Break if the new position is outside the board.
-            if (!IsValidBoardPosition(newPosition))
+            if (!ChessBoardPlacementHandler.Instance.IsValidBoardPosition(newPosition))
                 break;
 
             // Get the piece at the new position, if any.

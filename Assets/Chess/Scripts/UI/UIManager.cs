@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 
@@ -9,7 +10,8 @@ public class UIManager : MonoBehaviour
     public static UIManager Instance { get; private set; }
     [SerializeField] private GameObject blackPawnPromotionPanel;
     [SerializeField] private GameObject whitePawnPromotionPanel;
-    [SerializeField] public List<Sprite> availablePromotionSprites;
+    [SerializeField] private TextMeshProUGUI turnText;
+    public List<Sprite> availablePromotionSprites;
 
     private ChessPiece _pawnPiece;
 
@@ -23,6 +25,7 @@ public class UIManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+
         HidePawnPromotionPanel();
     }
 
@@ -41,7 +44,7 @@ public class UIManager : MonoBehaviour
         }
     }
 
-    public void HidePawnPromotionPanel()
+    private void HidePawnPromotionPanel()
     {
         whitePawnPromotionPanel.SetActive(false);
         blackPawnPromotionPanel.SetActive(false);
@@ -70,5 +73,11 @@ public class UIManager : MonoBehaviour
         }
 
         ChessBoardPlacementHandler.Instance.PromotePawn(piece, availablePromotionSprites[index], _pawnPiece);
+    }
+
+    public void SetTurnText(bool isWhiteTurn)
+    {
+        turnText.text = isWhiteTurn ? "White's Turn" : "Black's Turn";
+        turnText.color = isWhiteTurn ? Color.white : Color.black;
     }
 }

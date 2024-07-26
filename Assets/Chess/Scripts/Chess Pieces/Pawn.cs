@@ -23,7 +23,8 @@ public class Pawn : ChessPiece
         // Calculate forward move
         Vector2Int forwardMove = new Vector2Int(currentPosition.x + direction, currentPosition.y);
 
-        if (IsValidBoardPosition(forwardMove) && ChessBoardPlacementHandler.Instance.GetPieceAt(forwardMove) == null)
+        if (ChessBoardPlacementHandler.Instance.IsValidBoardPosition(forwardMove) &&
+            ChessBoardPlacementHandler.Instance.GetPieceAt(forwardMove) == null)
         {
             possibleMoves.Add(forwardMove);
 
@@ -56,22 +57,39 @@ public class Pawn : ChessPiece
         }
     }
 
+    public void CalculatePossibleMovesWithDiagonals()
+    {
+        possibleMoves.Clear();
+        capturedMoves.Clear();
+        Vector2Int currentPosition = placementHandler.GetPosition();
+
+        // Check if the pawn has moved from its initial position
+        if ((!IsWhite && currentPosition.x != 1) || (IsWhite && currentPosition.x != 6))
+        {
+            hasMoved = true;
+        }
+
+        int direction = IsWhite ? -1 : 1; // White pawns move down, black pawns move up
+
+        // Calculate capture moves
+        Vector2Int leftCapture = new Vector2Int(currentPosition.x + direction, currentPosition.y - 1);
+        Vector2Int rightCapture = new Vector2Int(currentPosition.x + direction, currentPosition.y + 1);
+
+
+        possibleMoves.Add(leftCapture);
+        possibleMoves.Add(rightCapture);
+    }
+
     // Override to move the pawn and update its state
     public override void Move(Vector3 newPosition)
     {
         base.Move(newPosition);
         hasMoved = true;
+
         //Write pawn promotion code when it reaches end
         if ((!IsWhite && placementHandler.GetPosition().x == 7) || (IsWhite && placementHandler.GetPosition().x == 0))
         {
-            UIManager.Instance.ShowPawnPromotionPanel(IsWhite,this);
+            UIManager.Instance.ShowPawnPromotionPanel(IsWhite, this);
         }
-      
-
-
-       
     }
-
-
-    // TODO: Implement promotion when pawn reaches the end of the board
 }

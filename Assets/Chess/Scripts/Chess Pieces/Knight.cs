@@ -15,7 +15,7 @@ public class Knight : ChessPiece
 
         foreach (var move in moves)
         {
-            if (IsValidBoardPosition(move))
+            if (ChessBoardPlacementHandler.Instance.IsValidBoardPosition(move))
             {
                 ChessPiece pieceAtNewPosition = ChessBoardPlacementHandler.Instance.GetPieceAt(move);
 
