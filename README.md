@@ -24,8 +24,7 @@ Welcome to our 2D Chess Game built using Unity! This project aims to provide an 
 
 
 ### Gameplay
-![](https://github.com/Your_Repository_Name/Queen.mp4)
-
+![](https://github.com/tushant0525/ChessTemplate/blob/main/Readme%20stuff/Queen.mp4)
 
 
 ## Installation
